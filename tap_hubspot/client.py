@@ -196,6 +196,9 @@ class DynamicIncrementalHubspotStream(DynamicHubspotStream):
         super().__init__(*args, **kwargs)
 
     def _is_incremental_search(self, context: Context | None) -> bool:
+        # Allow forcing full refresh via config
+        if self.config.get("force_full_refresh", False):
+            return False
         return (
             self.replication_method == REPLICATION_INCREMENTAL  # type: ignore[return-value]
             and self.get_starting_replication_key_value(context)

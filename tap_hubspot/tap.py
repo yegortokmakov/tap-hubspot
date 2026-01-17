@@ -48,6 +48,13 @@ class TapHubspot(Tap):
             th.DateTimeType,
             description="Latest record date to sync",
         ),
+        th.Property(
+            "force_full_refresh",
+            th.BooleanType,
+            default=False,
+            description="Force full refresh instead of incremental replication. "
+            "When set to true, ignores state and extracts all records.",
+        ),
     ).to_dict()
 
     def discover_streams(self) -> list[streams.HubspotStream]:
